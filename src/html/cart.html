@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <title>Cart | Artmart</title>
+    <script type="module">
+        import {createCartElements, removeCartItemById, retrieveCart, updateNumberNextToCart} from "../javascript/cart.js";
+        import {calculatePrice, render} from "../javascript/frame.js";
+
+        window.render = render;
+        let cart = retrieveCart();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (cart === null) {
+                const text = document.createElement('h2');
+                text.innerText = "There are no items in your shopping cart.";
+                const main = document.getElementsByTagName('main').item(0);
+                main.replaceChild(text, main.children.item(0));
+                return;
+            }
+            updateNumberNextToCart();
+            createElementsAndAddRemove();
+            calculateTotal();
+        });
+
+        function calculateTotal() {
+            let total = 0;
+            for (const cartItem of cart) {
+                total += calculatePrice(cartItem.printSize, cartItem.frameStyle, cartItem.frameWidth, cartItem.matWidth) / 100;
+            }
+            if (total > 0) {
+                document.getElementById('cart-total').innerText = 'Total: € ' + total.toFixed(2);
+            }
+        }
+
+        async function createElementsAndAddRemove() {
+            const createdCart = await createCartElements(cart);
+            const cartItems = createdCart.getElementsByClassName('cart-item');
+            for (let cartItem of cartItems) {
+                const id = +cartItem.getElementsByClassName('cart-preview').item(0).getAttribute('id');
+                cartItem.getElementsByClassName('cart-remove').item(0).addEventListener('click', () => {
+                    removeCartItemById(id);
+                    document.getElementById('cart').removeChild(cartItem);
+                    calculateTotal();
+                    updateNumberNextToCart();
+                });
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+<header>
+    <a href="search.html">
+        <img src="artmart_logo.png" alt="Artmart" class="logo">
+    </a>
+    <nav>
+        <a href="search.html">Search</a>
+        <a href="cart.html" id="cart-link">Cart</a>
+    </nav>
+</header>
+<!--
+TODO remove items from the cart by clicking "x"
+-->
+<main>
+    <section id="cart" class="cart">
+
+        <!--
+        <div class="cart-item">
+          <div class="cart-preview">
+            <a href="framing.html">
+              <img class="cart-thumb" src="" alt="" onload="">
+            </a>
+          </div>
+          <div class="museum-label">
+            <div>
+              <span class="artist"></span>
+              <span class="title"></span>,
+              <span class="date"></span>
+              <br><br>
+              <span class="frame-description"></span>
+            </div>
+            <div class="price">€ 0</div>
+            <button type="button" class="cart-remove" aria-label="Remove"></button>
+          </div>
+        </div>
+        -->
+
+        <div id="cart-total" class="cart-total">Total: € 0</div>
+        <button type="button" id="cart-checkout" class="cart-checkout" onclick="window.location.href='checkout.html';">
+            Checkout
+        </button>
+    </section>
+</main>
+
+</body>
+
+</html>

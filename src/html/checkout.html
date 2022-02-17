@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <title>Checkout | Artmart</title>
+    <script type="module">
+        import {retrieveCart} from '../javascript/cart.js';
+        import {calculatePrice} from '../javascript/frame.js';
+
+        window.calculateTotal = function calculateTotal(dataCost) {
+            const cart = retrieveCart();
+            let subtotal = 0;
+            for (let cartItem of cart) {
+                subtotal += calculatePrice(cartItem.printSize, cartItem.frameStyle, cartItem.frameWidth, cartItem.matWidth) / 100;
+            }
+            document.getElementById('price-subtotal').innerText = subtotal.toFixed(2);
+
+            const shipping = ((+dataCost) / 100);
+            document.getElementById('price-shipping').innerText = shipping.toFixed(2);
+
+            document.getElementById('price-total').innerText = (subtotal + shipping).toFixed(2);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (retrieveCart() === null) {
+                const a = window.location.toString().replace(/\w+\.html/, "cart.html");
+                window.location.replace(a);
+                return;
+            }
+            calculateTotal(1500);
+        });
+    </script>
+</head>
+
+<body>
+<header>
+    <a href="search.html">
+        <img src="artmart_logo.png" alt="Artmart" class="logo">
+    </a>
+</header>
+
+<main>
+    <form class="checkout-form" id="checkout-form">
+        <fieldset>
+            <legend>Contact information</legend>
+            <div class="grid">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Shipping address</legend>
+            <div class="grid">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" required>
+
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address" required>
+
+                <label for="city">City</label>
+                <input type="text" name="city" id="city" required>
+
+                <label for="country">Country</label>
+                <select name="country" id="country"
+                        onchange="calculateTotal(this.options[this.selectedIndex].getAttribute('data-cost'))">
+                    <option data-cost="1500" value="AT">Austria</option>
+                    <option data-cost="1800" value="DE">Germany</option>
+                    <option data-cost="2500" value="CH">Switzerland</option>
+                    <option data-cost="6000" value="UK">United Kingdom</option>
+                </select>
+
+                <label for="postalcode">Postal code</label>
+                <input type="text" name="postalcode" id="postalcode" required>
+
+                <label for="phone">Phone (optional)</label>
+                <input type="tel" name="phone" id="phone">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Card details</legend>
+            <div class="grid">
+                <label for="cardholder">Name on card</label>
+                <input type="text" name="cardholder" id="cardholder" required>
+
+                <label for="cardnumber">Card number</label>
+                <input type="text" name="cardnumber" id="cardnumber" required>
+
+                <label for="cardexpiry">Expiration</label>
+                <input name="cardexpiry" id="cardexpiry" type="text" pattern="\d{2}/\d{4}" placeholder="MM/YYYY"
+                       required>
+
+                <label for="cardcvc">CVC</label>
+                <input name="cardcvc" id="cardcvc" type="text" pattern="\d{3}" required>
+            </div>
+        </fieldset>
+
+        <div>
+            <div>Subtotal: € <span id="price-subtotal">&mdash;</span></div>
+            <div>Shipping Costs: € <span id="price-shipping">&mdash;</span></div>
+        </div>
+
+        <div>
+            <div class="checkout-total">Total: € <span id="price-total">&mdash;</span></div>
+        </div>
+
+        <div class="button-row">
+            <a href="cart.html">&larr; Back to Cart</a>
+            <button type="submit" id="pay-button">Pay</button>
+        </div>
+    </form>
+</main>
+</body>
+
+</html>

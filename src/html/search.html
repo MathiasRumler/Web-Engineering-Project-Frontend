@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <title>Search | Artmart</title>
+
+</head>
+
+<body>
+  <header>
+    <a href="search.html">
+      <img src="artmart_logo.png" alt="Artmart" class="logo">
+    </a>
+    <nav>
+      <a href="search.html">Search</a>
+      <a href="cart.html" id="cart-link">Cart</a>
+    </nav>
+  </header>
+
+  <main>
+    <form role="search" class="search-form">
+      <input type="search" id="search" name="q" placeholder="Search the collection" aria-labelledby="search-button">
+      <button type="submit" id="search-button">Search</button>
+    </form>
+
+    <div id="search-info" class="search-info">
+      Search our collection of more than 400,000 artworks.
+    </div>
+
+    <section id="gallery" class="gallery">
+
+      <!-- Dynamically add search results using the template below -->
+<!--      <div class="thumb">-->
+<!--        <a href="framing.html">-->
+<!--          <img src="" alt="">-->
+<!--          <div class="museum-label">-->
+<!--            <span class="artist"></span>-->
+<!--            <span class="title"></span>,-->
+<!--            <span class="date"></span>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+
+    </section>
+  </main>
+  <script type="module" src="../javascript/search.js"></script>
+  <script type="module" src="../javascript/PictureModel.js"></script>
+
+</body>
+
+</html>
