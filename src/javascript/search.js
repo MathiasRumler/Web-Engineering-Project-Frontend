@@ -1,5 +1,3 @@
-
-
 import {PictureModel} from "./PictureModel.js";
 import {updateNumberNextToCart} from "./cart.js";
 
