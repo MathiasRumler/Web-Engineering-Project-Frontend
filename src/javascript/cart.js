@@ -104,7 +104,6 @@ export function retrieveCart() {
     }
     console.log(`Retrieved ${cart.length} cart items from local storage`);
     if (!(cart instanceof Array)) {
-        // cart = [cart];
     }
 
     return cart;
@@ -124,6 +123,3 @@ export function storeInCart(picture) {
     console.log(`Storing picture with id ${picture.objectID} in local storage`);
     localStorage.setItem('cart', JSON.stringify(cart));
 }
-
-// const dummyData1 = new CartPictureModel(43242,'L','natural', 5.5,'Mint',5.5);
-// storeInCart(dummyData1);

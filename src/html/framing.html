@@ -170,10 +170,9 @@
       document.getElementById("print-size-l-label").innerHTML = `Large <br>${printSizes['L'][0] / 10} × ${printSizes['L'][1] / 10} cm`
       document.getElementById('total-size').innerHTML = `${totalWidth / 10} × ${totalHeight / 10} cm`;
 
-
-      // TODO: render picture frame
+      //render picture frame
       Frame.render(previewImg, previewImgContainer, printSize, frameStyle, frameWidth , frameColor, matWidth );
-      // TODO: update price
+      //update price
       const priceField = document.getElementById('price');
       priceField.textContent = '€ ' + Frame.calculatePrice(printSize, frameStyle, frameWidth, matWidth);
     }

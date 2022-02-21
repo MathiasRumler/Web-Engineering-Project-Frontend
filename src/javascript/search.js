@@ -30,10 +30,10 @@ function onStart(){
         searchInfoResults = searchQuery !== '' ? lastQuery.foundArtworks : 'Search our collection of more than 400,000 artworks.';
         // console.log(JSON.parse(cacheData))
         try {
-            renderGall( cacheData ? JSON.parse(cacheData) : [])
+            renderGallery( cacheData ? JSON.parse(cacheData) : [])
         } catch (e) {
             console.log('Fehler beim LocalStoragecache')
-            renderGall([])
+            renderGallery([])
 
         }
     }
@@ -85,8 +85,6 @@ async function getHighlightImages() {
                 searchInfo.textContent = searchInfoResults;
                 localStorage.setItem('searchCache', '');
                 localStorage.setItem('lastSearch', JSON.stringify({lastSearchQuery: searchQuery, foundArtworks: searchInfoResults}));
-
-                return;
             })
 
 
@@ -118,11 +116,11 @@ async function renderBild(arrayus) {
     }
     console.log(pictureCollection)
     localStorage.setItem('searchCache', JSON.stringify(pictureCollection));
-    renderGall(pictureCollection)
+    renderGallery(pictureCollection)
 
 }
 
-async function renderGall(pictureArray) {
+async function renderGallery(pictureArray) {
     searchInfo.textContent = searchInfoResults;
     pictureArray.forEach((pictureEntry) => {
         const container = document.querySelector('#gallery');
